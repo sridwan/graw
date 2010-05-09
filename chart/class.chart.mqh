@@ -1,9 +1,9 @@
 //+------------------------------------------------------------------+
 //|                                                  class.chart.mqh |
 //|                                                 Stephanus Ridwan |
-//|                                             sridwan981@gmail.com |
+//|                                      sridwan981 at gmail dot com |
 //| Deskripsi:                                                       |
-//| Saat ini hanya membuat garis :D                                  |
+//| Simplify making chart objects.                                   |
 //| Docs:                                                            |
 //| Jenis2 garis: STYLE_SOLID, STYLE_DASH, STYLE_DOT, STYLE_DASHDOT, |
 //| STYLE_DASHDOTDOT                                                 |
