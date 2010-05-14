@@ -12,6 +12,7 @@
 #property link      "sridwan981@gmail.com"
 
 #define CH_PREFIX          "obj"
+#define CH_BOX_SUFFIX      "_box"
 //#==================================================================#
 //#                      P R O P E R T I E S                         #
 //#==================================================================#
@@ -43,7 +44,8 @@ string chart.line(datetime x1, double y1, datetime x2, double y2,
    return(obj_name);
 }
 //+------------------------------------------------------------------+
-string chart.text(datetime x1, double y1, color clr, string text, int size=18, string font="")
+string chart.text(datetime x1, double y1, color clr, string text, int size=18,
+  string font="Arial")
 {
    _ch_counter++;
    string obj_name = CH_PREFIX + _ch_counter;
@@ -52,11 +54,14 @@ string chart.text(datetime x1, double y1, color clr, string text, int size=18, s
    return(obj_name);
 }
 //+------------------------------------------------------------------+
-string chart.label(int x1, int y1, color clr, string text, int size=18, string font="")
+string chart.label(int x1, int y1, color clr, string text, int size=18,
+  string font="Arial")
 {
    _ch_counter++;
    string obj_name = CH_PREFIX + _ch_counter;
-   ObjectCreate(obj_name, OBJ_LABEL, 0, x1, y1);
+   ObjectCreate(obj_name, OBJ_LABEL, 0, 0, 0);
+   ObjectSet(obj_name, OBJPROP_XDISTANCE, x1);
+   ObjectSet(obj_name, OBJPROP_YDISTANCE, y1);
    ObjectSetText(obj_name, text, size, font, clr);
    return(obj_name);
 }
@@ -72,6 +77,30 @@ string chart.box(datetime x1, double y1, datetime x2, double y2,
    ObjectSet(obj_name, OBJPROP_WIDTH, width);
    ObjectSet(obj_name, OBJPROP_BACK, true);
    return(obj_name);
+}
+//+------------------------------------------------------------------+
+void chart.changeBoxColor(string name, color clr)
+{
+  string boxname = name + CH_BOX_SUFFIX;
+  ObjectSet(boxname, OBJPROP_COLOR, clr);
+}
+//+------------------------------------------------------------------+
+string chart.getBoxName(string name)
+{
+  return(name + CH_BOX_SUFFIX);
+}
+//+------------------------------------------------------------------+
+string chart.boxedLabel(int x1, int y1, int bx, int by, color txtclr,
+  color boxclr, string text, int txtsize=12, int boxsize=120, string font="Arial")
+{
+  string obj_name = chart.label(x1, y1, txtclr, text, txtsize, font);
+  string box_name = obj_name + CH_BOX_SUFFIX;
+  ObjectCreate(box_name, OBJ_LABEL, 0, 0, 0);
+  ObjectSet(box_name, OBJPROP_XDISTANCE, x1-bx);
+  ObjectSet(box_name, OBJPROP_YDISTANCE, y1-by);
+  ObjectSet(box_name, OBJPROP_BACK, true);
+  ObjectSetText(box_name, "-", boxsize, "Arial Black", boxclr);
+  return(obj_name);
 }
 //#==================================================================#
 //#                  P R I V A T E    M E T H O D                    #
